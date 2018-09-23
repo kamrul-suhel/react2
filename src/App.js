@@ -5,23 +5,33 @@ import Person from './Person/Person'
 class App extends Component {
     state = {
         persons: [
-            {name: "ian", age: 35},
-            {name: "mike", age: 36},
-            {name: "Hemm", age: 28},
-            {name: "Kamrul", age: 33},
+            {id: 'asd', name: "ian", age: 35},
+            {id: 'akjd',name: "mike", age: 36},
+            {id: 'aasd',name: "Hemm", age: 28},
+            {id: 'lakjow',name: "Kamrul", age: 33},
         ],
 
         showPerson: false
     }
 
-    changedHendler = (event) => {
+    nameChangedHandler = (event, id) => {
+        const personIndex = this.state.persons.findIndex(p => {
+            return p.index === id;
+        })
+        // ES6 sprade operator
+        const person = {
+            ...this.state.persons[personIndex]
+        };
+        // or es5 operator
+        // const person = Object.assign({}, this.state.persons[personIndex]);
+
+        person.name = event.target.value;
+
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
+
         this.setState({
-            persons: [
-                {name: event.target.value, age: 35},
-                {name: "mike", age: 36},
-                {name: "Hemm", age: 28},
-                {name: "Kamrul", age: 32},
-            ]
+            person: persons
         })
     }
 
@@ -58,10 +68,10 @@ class App extends Component {
                             return (
                                 <Person
                                 name={person.name}
-                                key={index}
+                                key={person.id}
                                 age={person.age}
                                 click={this.removePerson.bind(this, index)}
-                                changed={this.changedHendler.bind(this)}/>
+                                changed={(event) => this.nameChangedHandler(event, person.id)}/>
                             )
                         })
                     }
