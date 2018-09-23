@@ -37,10 +37,19 @@ class App extends Component {
 
 
     render() {
+        const style = {
+            backgroundColor: '#cdcdcd',
+            cursor: 'pointer',
+            border: '1ps solid #ddd',
+            padding: '5px'
+        }
         return (
             <div className="App">
                 <h2>Reach Course: </h2>
-                <button onClick={() => this.changeName('some params')}>Switch person</button>
+                <button
+                    style={style}
+                    onClick={() => this.changeName('some params')}
+                >Switch person</button>
 
                 <Person
                     name={this.state.person[0].name}
