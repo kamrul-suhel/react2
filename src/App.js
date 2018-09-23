@@ -4,28 +4,19 @@ import Person from './Person/Person'
 
 class App extends Component {
     state = {
-        person : [
+        persons: [
             {name: "ian", age: 35},
             {name: "mike", age: 36},
             {name: "Hemm", age: 28},
             {name: "Kamrul", age: 33},
-        ]
-    }
+        ],
 
-    changeName = (params) => {
-        this.setState({
-            person : [
-                {name: params, age: 35},
-                {name: "mike", age: 36},
-                {name: "Hemm", age: 28},
-                {name: "Kamrul", age: 32},
-            ]
-        })
+        showPerson: false
     }
 
     changedHendler = (event) => {
         this.setState({
-            person : [
+            persons: [
                 {name: event.target.value, age: 35},
                 {name: "mike", age: 36},
                 {name: "Hemm", age: 28},
@@ -34,6 +25,18 @@ class App extends Component {
         })
     }
 
+    removePerson(personIndex){
+        const persons = this.state.persons;
+        persons.splice(personIndex, 1);
+        this.setState({persons : persons});
+    }
+
+    togglePerson = () => {
+        const doesShow = this.state.showPerson;
+        this.setState({
+            showPerson: !doesShow
+        })
+    }
 
 
     render() {
@@ -43,36 +46,38 @@ class App extends Component {
             border: '1ps solid #ddd',
             padding: '5px'
         }
+
+        let person = null;
+
+        if (this.state.showPerson) {
+            person = (
+                <div>
+                    {
+                        this.state.persons.map((person, index) => {
+                            return (
+                                <Person
+                                name={person.name}
+                                key={index}
+                                age={person.age}
+                                click={this.removePerson.bind(this, index)}
+                                changed={this.changedHendler.bind(this)}/>
+                            )
+                        })
+                    }
+                </div>
+            )
+        }
+
         return (
             <div className="App">
                 <h2>Reach Course: </h2>
                 <button
                     style={style}
-                    onClick={() => this.changeName('some params')}
-                >Switch person</button>
+                    onClick={this.togglePerson}
+                >Switch person
+                </button>
 
-                <Person
-                    name={this.state.person[0].name}
-                    age={this.state.person[0].age}
-                >He is a fullstack developer</Person>
-
-                <Person
-                    name={this.state.person[1].name}
-                    age={this.state.person[1].age}
-                >He is a fullstack developer</Person>
-
-                <Person
-                    name={this.state.person[2].name}
-                    age={this.state.person[2].age}
-                    changed={this.changedHendler}
-                    click={this.changeName.bind(this, 'max')}
-                >He is a fullstack developer</Person>
-
-                <Person
-                    name={this.state.person[3].name}
-                    age={this.state.person[3].age}
-                >He is a fullstack developer</Person>
-
+                {person}
             </div>
         );
     }
