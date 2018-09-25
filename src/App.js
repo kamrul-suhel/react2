@@ -54,8 +54,10 @@ class App extends Component {
         const style = {
             backgroundColor: '#cdcdcd',
             cursor: 'pointer',
+            color: '#777',
+            fontSize: '1rem',
             border: '1ps solid #ddd',
-            padding: '5px'
+            padding: '10px'
         }
 
         let person = null;
@@ -77,6 +79,8 @@ class App extends Component {
                     }
                 </div>
             )
+
+            style.backgroundColor = 'red';
         }
 
         return (
