@@ -16,7 +16,7 @@ class App extends Component {
 
     nameChangedHandler = (event, id) => {
         const personIndex = this.state.persons.findIndex(p => {
-            return p.index === id;
+            return p.id === id;
         })
         // ES6 sprade operator
         const person = {
@@ -26,12 +26,13 @@ class App extends Component {
         // const person = Object.assign({}, this.state.persons[personIndex]);
 
         person.name = event.target.value;
+        console.log(person)
 
         const persons = [...this.state.persons];
         persons[personIndex] = person;
 
         this.setState({
-            person: persons
+            persons: persons
         })
     }
 
