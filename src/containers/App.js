@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Persons from "../components/Persons/Persons";
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
     state = {
         persons: [
+            {id: 'lakjow',name: "Kamrul", age: 33},
             {id: 'asd', name: "ian", age: 35},
             {id: 'akjd',name: "mike", age: 36},
-            {id: 'aasd',name: "Hemm", age: 28},
-            {id: 'lakjow',name: "Kamrul", age: 33},
+            {id: 'aasd',name: "Hemm", age: 28}
         ],
 
         showPerson: false
@@ -26,7 +27,6 @@ class App extends Component {
         // const person = Object.assign({}, this.state.persons[personIndex]);
 
         person.name = event.target.value;
-        console.log(person)
 
         const persons = [...this.state.persons];
         persons[personIndex] = person;
@@ -36,7 +36,7 @@ class App extends Component {
         })
     }
 
-    removePerson(personIndex){
+    removePerson = (personIndex) => {
         // const persons = this.state.persons.slice();
         const persons = [...this.state.persons];
         persons.splice(personIndex, 1);
@@ -52,46 +52,28 @@ class App extends Component {
 
 
     render() {
-        const style = {
-            backgroundColor: '#cdcdcd',
-            cursor: 'pointer',
-            color: '#777',
-            fontSize: '1rem',
-            border: '1ps solid #ddd',
-            padding: '10px'
-        }
+
 
         let person = null;
 
         if (this.state.showPerson) {
             person = (
                 <div>
-                    {
-                        this.state.persons.map((person, index) => {
-                            return (
-                                <Person
-                                name={person.name}
-                                key={person.id}
-                                age={person.age}
-                                click={this.removePerson.bind(this, index)}
-                                changed={(event) => this.nameChangedHandler(event, person.id)}/>
-                            )
-                        })
-                    }
+                    <Persons
+                        persons={this.state.persons}
+                        clicked={this.removePerson}
+                        changed={this.nameChangedHandler}/>
                 </div>
             )
 
-            style.backgroundColor = 'red';
+
         }
 
         return (
             <div className="App">
-                <h2>Reach Course: </h2>
-                <button
-                    style={style}
-                    onClick={this.togglePerson}
-                >Switch person
-                </button>
+               <Cockpit
+                togglePerson={this.togglePerson}
+                showPerson={this.state.showPerson}/>
 
                 {person}
             </div>
