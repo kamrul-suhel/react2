@@ -52,8 +52,6 @@ class App extends Component {
 
 
     render() {
-
-
         let person = null;
 
         if (this.state.showPerson) {
@@ -65,8 +63,6 @@ class App extends Component {
                         changed={this.nameChangedHandler}/>
                 </div>
             )
-
-
         }
 
         return (
